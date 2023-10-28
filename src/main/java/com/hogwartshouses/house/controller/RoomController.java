@@ -29,7 +29,7 @@ public class RoomController {
         return roomService.saveRoom(room);
     }
 
-    @PatchMapping("/{id}")
+    @PatchMapping("/{id}/person")
     Room savePerson(@PathVariable Long id, @RequestBody Person person) throws RoomNotFoundException {
         return roomService.addPersonToRoom(person, id);
     }
