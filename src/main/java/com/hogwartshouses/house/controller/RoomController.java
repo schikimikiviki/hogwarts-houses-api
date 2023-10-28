@@ -1,8 +1,8 @@
 package com.hogwartshouses.house.controller;
 
 import com.hogwartshouses.house.service.exceptions.RoomNotFoundException;
-import com.hogwartshouses.house.model.Person;
-import com.hogwartshouses.house.model.Room;
+import com.hogwartshouses.house.model.classes.Person;
+import com.hogwartshouses.house.model.classes.Room;
 import com.hogwartshouses.house.service.RoomService;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,6 +42,11 @@ public class RoomController {
     @DeleteMapping("/{id}")
     Map<String, Object> deleteSingleRoom(@PathVariable Long id) {
         return roomService.deleteRoom(id);
+    }
+
+    @PatchMapping("/{id}")
+    Room changeRoomDetails (@PathVariable Long id, @RequestBody Room room) throws RoomNotFoundException {
+        return roomService.updateRoom(id, room);
     }
 
 

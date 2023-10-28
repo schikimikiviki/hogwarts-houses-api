@@ -1,8 +1,8 @@
 package com.hogwartshouses.house.service;
 
 import com.hogwartshouses.house.service.exceptions.RoomNotFoundException;
-import com.hogwartshouses.house.model.Person;
-import com.hogwartshouses.house.model.Room;
+import com.hogwartshouses.house.model.classes.Person;
+import com.hogwartshouses.house.model.classes.Room;
 import com.hogwartshouses.house.repository.PersonRepository;
 import com.hogwartshouses.house.repository.RoomRepository;
 import org.springframework.stereotype.Service;
@@ -48,7 +48,7 @@ public class RoomService {
 
             return roomRepository.save(foundRoom);
         } else {
-            throw new RoomNotFoundException("Room with ID " + roomId + " not found");
+            throw new RoomNotFoundException("Room.java with ID " + roomId + " not found");
         }
     }
 
@@ -59,26 +59,45 @@ public class RoomService {
         if (room.isPresent()) {
             return room;
         } else {
-            throw new RoomNotFoundException("Room with ID " + id + " not found");
+            throw new RoomNotFoundException("Room.java with ID " + id + " not found");
         }
 
     }
+
     public Map<String, Object> deleteRoom(Long id) {
         Optional<Room> roomOptional = roomRepository.findRoomById(id);
 
         if (roomOptional.isPresent()) {
-            Room room = roomOptional.get(); // Get the room details before deletion
+            Room room = roomOptional.get();
             roomRepository.deleteById(id);
 
-            // Construct a response object with "room deleted" message and the deleted room's details
             Map<String, Object> response = new HashMap<>();
-            response.put("message", "Room deleted: " + room);
+            response.put("message", "Room.java deleted: " + room);
             response.put("deletedRoomDetails", room);
 
-            return response; // Return the constructed response
+            return response;
         } else {
-            throw new RoomNotFoundException("Room with ID " + id + " not found");
+            throw new RoomNotFoundException("Room.java with ID " + id + " not found");
         }
+    }
+
+    // this request is supposed only to take into account the fields OTHER THAN
+    // the list of characters - for this, there is a separate request
+
+    public Room updateRoom(Long id, Room room) throws RoomNotFoundException {
+
+        Room existingRoom = roomRepository.findById(id)
+                .orElseThrow(RoomNotFoundException::new);
+
+        // Update the existing room with the data
+        existingRoom.setName(room.getName());
+        existingRoom.setDescription(room.getDescription());
+        existingRoom.setAffiliation(room.getAffiliation());
+        existingRoom.setCapacity(room.getCapacity());
+
+        // Save the updated room
+        return roomRepository.save(existingRoom);
+
     }
 
 

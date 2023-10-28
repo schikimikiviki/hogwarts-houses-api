@@ -1,6 +1,6 @@
-package com.hogwartshouses.house.model;
+package com.hogwartshouses.house.model.classes;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.hogwartshouses.house.model.enums.Affiliation;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -26,6 +26,7 @@ public class Room {
     private List<Person> personList;
 
     public Room() {
+
     }
 
 

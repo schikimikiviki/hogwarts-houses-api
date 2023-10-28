@@ -1,4 +1,4 @@
-package com.hogwartshouses.house.model;
+package com.hogwartshouses.house.model.enums;
 
 public enum Affiliation {
 
