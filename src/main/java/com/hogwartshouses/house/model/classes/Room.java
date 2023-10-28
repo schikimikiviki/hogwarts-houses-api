@@ -32,10 +32,27 @@ public class Room {
 
     }
 
+    //logic
+
     public void updatePlacesLeft() {
         int currentPersons = personList != null ? personList.size() : 0;
-        placesLeft = capacity - currentPersons;
+        placesLeft = Math.max(0, capacity - currentPersons);
     }
+
+    public boolean hasAvailableCapacity() {
+        return placesLeft > 0;
+    }
+
+    public boolean addPerson(Person newPerson) {
+        if (hasAvailableCapacity()) {
+            personList.add(newPerson);
+            updatePlacesLeft();
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 
     // Getters and setters
 
@@ -81,6 +98,7 @@ public class Room {
     }
 
     public List<Person> getPersonList() {
+        updatePlacesLeft();
         return personList;
     }
 

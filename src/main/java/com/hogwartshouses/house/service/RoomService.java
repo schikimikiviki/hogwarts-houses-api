@@ -1,5 +1,6 @@
 package com.hogwartshouses.house.service;
 
+import com.hogwartshouses.house.service.exceptions.RoomCapacityFullException;
 import com.hogwartshouses.house.service.exceptions.RoomNotFoundException;
 import com.hogwartshouses.house.model.classes.Person;
 import com.hogwartshouses.house.model.classes.Room;
@@ -26,20 +27,20 @@ public class RoomService {
     }
 
     public Room saveRoom(Room room) {
-
-        // todo: check if capacity is there
-
-        return roomRepository.save(room);
+        if (room.getPlacesLeft() > 0) {
+            return roomRepository.save(room);
+        } else {
+            throw new RoomCapacityFullException();
+        }
     }
 
-    public Room addPersonToRoom(Person person, Long roomId) throws RoomNotFoundException {
-        Optional<Room> roomOptional = roomRepository.findById(roomId);
 
-        if (roomOptional.isPresent()) {
-            Room foundRoom = roomOptional.get();
+    public Room addPersonToRoom(Person person, Long roomId) throws RoomNotFoundException, RoomCapacityFullException {
+        Room foundRoom = roomRepository.findById(roomId)
+                .orElseThrow(() -> new RoomNotFoundException("Room with ID " + roomId + " not found"));
 
+        if (foundRoom.getPlacesLeft() > 0 && !foundRoom.getPersonList().contains(person)) {
             person.setRoom(foundRoom);
-
             Person savedPerson = personRepository.save(person);
 
             List<Person> personList = foundRoom.getPersonList();
@@ -48,12 +49,12 @@ public class RoomService {
             }
             personList.add(savedPerson);
             foundRoom.setPersonList(personList);
-
             return roomRepository.save(foundRoom);
         } else {
-            throw new RoomNotFoundException("Room.java with ID " + roomId + " not found");
+            throw new RoomCapacityFullException("Room capacity reached or person already exists in the room. Cannot add more people.");
         }
     }
+
 
     public Optional<Room> getSingleRoom(Long id) {
 
@@ -66,6 +67,10 @@ public class RoomService {
         }
 
     }
+
+    // todo:
+    // 1. update people response body is showing bs
+    // 2. somewhere its not 0, but 1
 
     public Map<String, Object> deleteRoom(Long id) {
         Optional<Room> roomOptional = roomRepository.findRoomById(id);
@@ -87,21 +92,22 @@ public class RoomService {
     // this request is supposed only to take into account the fields OTHER THAN
     // the list of characters - for this, there is a separate request
 
-    public Room updateRoom(Long id, Room room) throws RoomNotFoundException {
+    public Room updateRoom(Long id, Room newRoom) throws RoomNotFoundException {
         Room existingRoom = roomRepository.findById(id)
                 .orElseThrow(RoomNotFoundException::new);
 
-        // Update the existing room with the data
-        existingRoom.setName(room.getName());
-        existingRoom.setDescription(room.getDescription());
-        existingRoom.setAffiliation(room.getAffiliation());
-        existingRoom.setCapacity(room.getCapacity());
+        // Update the existing newRoom with the data
+        existingRoom.setName(newRoom.getName());
+        existingRoom.setDescription(newRoom.getDescription());
+        existingRoom.setAffiliation(newRoom.getAffiliation());
+        existingRoom.setCapacity(newRoom.getCapacity());
+
 
         // Update the placesLeft field based on the modified capacity and personList
-        existingRoom.setPersonList(room.getPersonList()); // Assuming setter triggers placesLeft recalculation
-        existingRoom.updatePlacesLeft(); // Recalculate placesLeft
+        existingRoom.setPersonList(newRoom.getPersonList());
+        existingRoom.updatePlacesLeft();
 
-        // Save the updated room
+        // Save the updated newRoom
         return roomRepository.save(existingRoom);
     }
 
