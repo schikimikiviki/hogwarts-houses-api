@@ -1,5 +1,6 @@
 package com.hogwartshouses.house.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -12,6 +13,7 @@ public class Person {
     private String role;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "room_id")
     private Room room;
 

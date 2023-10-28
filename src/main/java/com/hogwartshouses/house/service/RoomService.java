@@ -30,24 +30,28 @@ public class RoomService {
        return roomRepository.save(room);
     }
 
-    public Room addPersonToRoom(Person person, Long id) throws RoomNotFoundException {
-        Optional<Room> roomById = roomRepository.findRoomById(id);
+    public Room addPersonToRoom(Person person, Long roomId) throws RoomNotFoundException {
+        Optional<Room> roomOptional = roomRepository.findById(roomId);
 
+        if (roomOptional.isPresent()) {
+            Room foundRoom = roomOptional.get();
 
-        if (roomById.isPresent()){
+            person.setRoom(foundRoom); // Associate the person with the room
 
-            Room foundRoom = roomById.get();
-            Person savedPerson = personRepository.save(person);
+            Person savedPerson = personRepository.save(person); // Save the person
 
-            List<Person> personList = new ArrayList<>();
+            // Add the saved person to the room's existing list of persons
+            List<Person> personList = foundRoom.getPersonList();
+            if (personList == null) {
+                personList = new ArrayList<>();
+            }
             personList.add(savedPerson);
             foundRoom.setPersonList(personList);
 
-            return roomRepository.save(foundRoom);
+            return roomRepository.save(foundRoom); // Save the updated room
         } else {
-            //error
             throw new RoomNotFoundException();
         }
-
     }
+
 }
