@@ -68,9 +68,6 @@ public class RoomService {
 
     }
 
-    // todo:
-    // 1. update people response body is showing bs
-    // 2. somewhere its not 0, but 1
 
     public Map<String, Object> deleteRoom(Long id) {
         Optional<Room> roomOptional = roomRepository.findRoomById(id);
@@ -110,6 +107,20 @@ public class RoomService {
         // Save the updated newRoom
         return roomRepository.save(existingRoom);
     }
+
+    public List<Room> getRoomsAvailable() {
+        List<Room> allRooms = roomRepository.findAll();
+        List<Room> availableRooms = new ArrayList<>();
+
+        for (Room room : allRooms) {
+            if (room.getPlacesLeft() > 0) {
+                availableRooms.add(room);
+            }
+        }
+
+        return availableRooms;
+    }
+
 
 
 
