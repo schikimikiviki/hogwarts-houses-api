@@ -22,7 +22,7 @@ public class Room {
 
     private int capacity;
 
-    @OneToMany(mappedBy = "room")
+    @OneToMany(mappedBy = "room", orphanRemoval = true)
     private List<Person> personList;
 
     public Room() {

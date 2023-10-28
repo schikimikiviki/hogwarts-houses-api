@@ -7,9 +7,7 @@ import com.hogwartshouses.house.repository.PersonRepository;
 import com.hogwartshouses.house.repository.RoomRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class RoomService {
@@ -65,5 +63,23 @@ public class RoomService {
         }
 
     }
+    public Map<String, Object> deleteRoom(Long id) {
+        Optional<Room> roomOptional = roomRepository.findRoomById(id);
+
+        if (roomOptional.isPresent()) {
+            Room room = roomOptional.get(); // Get the room details before deletion
+            roomRepository.deleteById(id);
+
+            // Construct a response object with "room deleted" message and the deleted room's details
+            Map<String, Object> response = new HashMap<>();
+            response.put("message", "Room deleted: " + room);
+            response.put("deletedRoomDetails", room);
+
+            return response; // Return the constructed response
+        } else {
+            throw new RoomNotFoundException("Room with ID " + id + " not found");
+        }
+    }
+
 
 }

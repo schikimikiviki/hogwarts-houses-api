@@ -7,6 +7,7 @@ import com.hogwartshouses.house.service.RoomService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -36,6 +37,11 @@ public class RoomController {
     @GetMapping("/{id}")
     Optional<Room> getSingleRoom(@PathVariable Long id) {
         return roomService.getSingleRoom(id);
+    }
+
+    @DeleteMapping("/{id}")
+    Map<String, Object> deleteSingleRoom(@PathVariable Long id) {
+        return roomService.deleteRoom(id);
     }
 
 
