@@ -20,15 +20,24 @@ public class Room {
     private Affiliation affiliation;
 
 
-    private int capacity;
-
     @OneToMany(mappedBy = "room", orphanRemoval = true)
     private List<Person> personList;
+
+    private int capacity;
+
+
+    private int placesLeft;
 
     public Room() {
 
     }
 
+    public void updatePlacesLeft() {
+        int currentPersons = personList != null ? personList.size() : 0;
+        placesLeft = capacity - currentPersons;
+    }
+
+    // Getters and setters
 
     public Long getId() {
         return id;
@@ -68,6 +77,7 @@ public class Room {
 
     public void setCapacity(int capacity) {
         this.capacity = capacity;
+        updatePlacesLeft();
     }
 
     public List<Person> getPersonList() {
@@ -76,7 +86,15 @@ public class Room {
 
     public void setPersonList(List<Person> personList) {
         this.personList = personList;
+        updatePlacesLeft();
     }
 
+    public int getPlacesLeft() {
+        return placesLeft;
+    }
+
+    public void setPlacesLeft(int placesLeft) {
+        this.placesLeft = placesLeft;
+    }
 
 }

@@ -26,6 +26,9 @@ public class RoomService {
     }
 
     public Room saveRoom(Room room) {
+
+        // todo: check if capacity is there
+
         return roomRepository.save(room);
     }
 
@@ -85,7 +88,6 @@ public class RoomService {
     // the list of characters - for this, there is a separate request
 
     public Room updateRoom(Long id, Room room) throws RoomNotFoundException {
-
         Room existingRoom = roomRepository.findById(id)
                 .orElseThrow(RoomNotFoundException::new);
 
@@ -95,10 +97,14 @@ public class RoomService {
         existingRoom.setAffiliation(room.getAffiliation());
         existingRoom.setCapacity(room.getCapacity());
 
+        // Update the placesLeft field based on the modified capacity and personList
+        existingRoom.setPersonList(room.getPersonList()); // Assuming setter triggers placesLeft recalculation
+        existingRoom.updatePlacesLeft(); // Recalculate placesLeft
+
         // Save the updated room
         return roomRepository.save(existingRoom);
-
     }
+
 
 
 }
