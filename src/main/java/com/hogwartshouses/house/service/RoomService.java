@@ -121,7 +121,37 @@ public class RoomService {
         return availableRooms;
     }
 
+//    public Room changeRoomOfPerson(Long personId, Long newRoomId ) {
+//
+//    }
 
+    public Optional<Person> getPerson(Long id){
+        return personRepository.findById(id);
+        //todo: add exception here and also for update
+    }
+
+//    public Optional<Person> updatePersonDetails(Long id, Room newRoom) {
+//       Optional<Person> person = personRepository.findById(id);
+//       person.get().setRoom(newRoom);
+//       return person;
+//    }
+
+    public Optional<Person> updatePersonRoom(Long personId, Long newRoomId) {
+        Optional<Person> personOptional = personRepository.findById(personId);
+        Optional<Room> newRoomOptional = roomRepository.findRoomById(newRoomId);
+
+        if (personOptional.isPresent() && newRoomOptional.isPresent()) {
+            Person person = personOptional.get();
+            Room newRoom = newRoomOptional.get();
+
+            person.setRoom(newRoom);
+            personRepository.save(person);
+
+            return Optional.of(person);
+        } else {
+            return Optional.empty(); // Indicate that either the person or the new room wasn't found
+        }
+    }
 
 
 }

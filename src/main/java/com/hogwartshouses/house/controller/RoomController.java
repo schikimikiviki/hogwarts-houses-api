@@ -4,6 +4,7 @@ import com.hogwartshouses.house.service.exceptions.RoomNotFoundException;
 import com.hogwartshouses.house.model.classes.Person;
 import com.hogwartshouses.house.model.classes.Room;
 import com.hogwartshouses.house.service.RoomService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -53,6 +54,25 @@ public class RoomController {
     List<Room> getAvailableRooms (){
         return roomService.getRoomsAvailable();
     }
+
+
+    @GetMapping("/{id}/single-person")
+    Optional<Person> findSinglePerson(@PathVariable Long id) {
+        return roomService.getPerson(id);
+    }
+
+
+    @PatchMapping("/{personId}/update-room/{newRoomId}")
+    public ResponseEntity<?> updatePersonRoom(@PathVariable Long personId, @PathVariable Long newRoomId) {
+        Optional<Person> updatedPerson = roomService.updatePersonRoom(personId, newRoomId);
+
+        if (updatedPerson.isPresent()) {
+            return ResponseEntity.ok("Person's room updated successfully");
+        } else {
+            return ResponseEntity.notFound().build(); // Or return an appropriate error response
+        }
+    }
+
 
 
 }
