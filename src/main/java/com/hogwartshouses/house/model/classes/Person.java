@@ -3,6 +3,8 @@ package com.hogwartshouses.house.model.classes;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 public class Person {
     @Id
@@ -16,6 +18,9 @@ public class Person {
     @JsonIgnore
     @JoinColumn(name = "room_id")
     private Room room;
+
+    @OneToMany(mappedBy = "person", orphanRemoval = true)
+    private List<Recipe> recipeList;
 
     public Person() {
     }
@@ -50,5 +55,13 @@ public class Person {
 
     public void setRoom(Room room) {
         this.room = room;
+    }
+
+    public List<Recipe> getRecipeList() {
+        return recipeList;
+    }
+
+    public void setRecipeList(List<Recipe> recipeList) {
+        this.recipeList = recipeList;
     }
 }
