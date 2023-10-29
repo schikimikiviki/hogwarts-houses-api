@@ -63,6 +63,10 @@ public class Potion {
 
     public void setIngredientList(List<Ingredient> ingredientList) {
         this.ingredientList = ingredientList;
+
+        if (ingredientList.size() < 5) {
+            this.brewingStatus = BrewingStatus.brew;
+        }
     }
 
     public BrewingStatus getBrewingStatus() {

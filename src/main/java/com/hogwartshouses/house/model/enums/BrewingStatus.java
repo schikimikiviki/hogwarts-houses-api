@@ -4,5 +4,6 @@ public enum BrewingStatus {
 
     brew,
     replica,
-    discovery
+    discovery,
+
 }
