@@ -22,8 +22,14 @@ public class Person {
     @OneToMany(mappedBy = "person", orphanRemoval = true)
     private List<Recipe> recipeList;
 
+    @OneToMany(mappedBy = "person", orphanRemoval = true)
+    private List<Potion> potionList;
+
+
     public Person() {
     }
+
+    // getters and setters
 
     public Long getId() {
         return id;
@@ -63,5 +69,13 @@ public class Person {
 
     public void setRecipeList(List<Recipe> recipeList) {
         this.recipeList = recipeList;
+    }
+
+    public List<Potion> getPotionList() {
+        return potionList;
+    }
+
+    public void setPotionList(List<Potion> potionList) {
+        this.potionList = potionList;
     }
 }

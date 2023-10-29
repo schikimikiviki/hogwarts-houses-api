@@ -1,12 +1,14 @@
 package com.hogwartshouses.house.model.classes;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.hogwartshouses.house.model.enums.BrewingStatus;
 import jakarta.persistence.*;
 
 import java.util.List;
 
 @Entity
-public class Recipe {
+public class Potion {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -18,17 +20,18 @@ public class Recipe {
     @JoinColumn(name = "person_id")
     private Person person;
 
-    @OneToMany(mappedBy = "recipe")
+    @OneToMany(mappedBy = "potion", orphanRemoval = true)
     private List<Ingredient> ingredientList;
 
-    @OneToMany(mappedBy = "recipe", orphanRemoval = true)
-    private List<Potion> potionList;
+    private BrewingStatus brewingStatus;
 
-
-    public Recipe() {
-    }
+    @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name = "recipe_id")
+    private Recipe recipe;
 
     // getters and setters
+
 
     public Long getId() {
         return id;
@@ -62,11 +65,19 @@ public class Recipe {
         this.ingredientList = ingredientList;
     }
 
-    public List<Potion> getPotionList() {
-        return potionList;
+    public BrewingStatus getBrewingStatus() {
+        return brewingStatus;
     }
 
-    public void setPotionList(List<Potion> potionList) {
-        this.potionList = potionList;
+    public void setBrewingStatus(BrewingStatus brewingStatus) {
+        this.brewingStatus = brewingStatus;
+    }
+
+    public Recipe getRecipe() {
+        return recipe;
+    }
+
+    public void setRecipe(Recipe recipe) {
+        this.recipe = recipe;
     }
 }

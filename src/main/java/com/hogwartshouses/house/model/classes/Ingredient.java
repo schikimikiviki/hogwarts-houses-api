@@ -18,10 +18,15 @@ public class Ingredient {
     @JoinColumn(name = "recipe_id")
     private Recipe recipe;
 
+    @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name = "potion_id")
+    private Potion potion;
     public Ingredient() {
     }
 
     // getters and setters
+
     public Long getId() {
         return id;
     }
@@ -44,5 +49,13 @@ public class Ingredient {
 
     public void setRecipe(Recipe recipe) {
         this.recipe = recipe;
+    }
+
+    public Potion getPotion() {
+        return potion;
+    }
+
+    public void setPotion(Potion potion) {
+        this.potion = potion;
     }
 }
