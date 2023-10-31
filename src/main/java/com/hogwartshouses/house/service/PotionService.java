@@ -1,6 +1,7 @@
 package com.hogwartshouses.house.service;
 
 import com.hogwartshouses.house.model.classes.Ingredient;
+import com.hogwartshouses.house.model.classes.Person;
 import com.hogwartshouses.house.model.classes.Potion;
 import com.hogwartshouses.house.model.classes.Room;
 import com.hogwartshouses.house.model.enums.BrewingStatus;
@@ -8,6 +9,7 @@ import com.hogwartshouses.house.repository.PotionRepository;
 import com.hogwartshouses.house.service.exceptions.RoomCapacityFullException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -67,7 +69,12 @@ public class PotionService {
         return names1.equals(names2);
     }
 
+    public List<Potion> getPotionsByStudent(Long id) {
+        //get student via id
+        List<Potion> potionList = potionRepository.findByPersonId(id);
 
+        return potionList;
+    }
 
 
 }

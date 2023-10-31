@@ -33,9 +33,6 @@ public class Potion {
     @JoinColumn(name = "recipe_id")
     private Recipe recipe;
 
-//Todo:
-    // 3. brewingStatus does not change if > 5
-
     // getters and setters
 
 

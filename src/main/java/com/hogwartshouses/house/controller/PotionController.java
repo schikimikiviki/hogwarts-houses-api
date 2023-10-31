@@ -29,4 +29,9 @@ public class PotionController {
         return potionService.savePotion(potion, potionList);
     }
 
+    @GetMapping("/{id}")
+    public List<Potion> getPotionsbyStudent(@PathVariable Long id){
+        return potionService.getPotionsByStudent(id);
+    }
+
 }
