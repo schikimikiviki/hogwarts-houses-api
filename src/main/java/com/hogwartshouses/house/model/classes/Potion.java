@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hogwartshouses.house.model.enums.BrewingStatus;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -29,6 +30,8 @@ public class Potion {
     @JsonIgnore
     @JoinColumn(name = "recipe_id")
     private Recipe recipe;
+
+
 
     // getters and setters
 
@@ -58,6 +61,10 @@ public class Potion {
     }
 
     public List<Ingredient> getIngredientList() {
+        // Check if the ingredientList is null and initialize to an empty list if null
+        if (this.ingredientList == null) {
+            this.ingredientList = new ArrayList<>();
+        }
         return ingredientList;
     }
 

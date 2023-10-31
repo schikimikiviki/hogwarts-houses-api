@@ -23,8 +23,10 @@ public class PotionController {
     }
 
     @PostMapping
-    public Potion postNewPotion(@RequestBody Potion potion){
-        return potionService.savePotion(potion);
+    public Potion postNewPotion(@RequestBody Potion potion) {
+
+        List<Potion> potionList = potionService.getAllPotions();
+        return potionService.savePotion(potion, potionList);
     }
 
 }
