@@ -3,9 +3,7 @@ package com.hogwartshouses.house.controller;
 import com.hogwartshouses.house.model.classes.Potion;
 import com.hogwartshouses.house.model.classes.Room;
 import com.hogwartshouses.house.service.PotionService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,4 +21,10 @@ public class PotionController {
     public List<Potion> getAllPotions() {
         return potionService.getAllPotions();
     }
+
+    @PostMapping
+    public Potion postNewPotion(@RequestBody Potion potion){
+        return potionService.savePotion(potion);
+    }
+
 }
