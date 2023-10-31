@@ -1,5 +1,6 @@
 package com.hogwartshouses.house.service;
 
+import com.hogwartshouses.house.model.classes.Ingredient;
 import com.hogwartshouses.house.model.classes.Potion;
 import com.hogwartshouses.house.model.classes.Room;
 import com.hogwartshouses.house.model.enums.BrewingStatus;
@@ -8,6 +9,8 @@ import com.hogwartshouses.house.service.exceptions.RoomCapacityFullException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 public class PotionService {
@@ -23,21 +26,48 @@ public class PotionService {
     }
 
     public Potion savePotion(Potion potion, List<Potion> potionList) {
+        boolean isReplica = false;
 
-        // check if ingredients are there already, get all potions
-
-        for (Potion potionItem : potionList){
-            if (potionItem.getIngredientList().equals(potion.getIngredientList())){
+        for (Potion potionItem : potionList) {
+            if (areIngredientListsIdentical(potionItem.getIngredientList(), potion.getIngredientList())) {
                 potion.setBrewingStatus(BrewingStatus.replica);
+                isReplica = true;
+                break;
             }
         }
 
-        if (potion.getIngredientList().size() < 5){
-            potion.setBrewingStatus(BrewingStatus.brew);
-        } else {
-            potion.setBrewingStatus(BrewingStatus.discovery);
+        if (!isReplica) {
+            if (potion.getIngredientList().size() < 5) {
+                potion.setBrewingStatus(BrewingStatus.brew);
+            } else {
+                potion.setBrewingStatus(BrewingStatus.discovery);
+            }
         }
+
         return potionRepository.save(potion);
     }
+
+    private boolean areIngredientListsIdentical(List<Ingredient> list1, List<Ingredient> list2) {
+        if (list1.size() != list2.size()) {
+            return false;
+        }
+
+        List<String> names1 = list1.stream()
+                .map(Ingredient::getIngredientName)
+                .map(Enum::name)
+                .sorted()
+                .collect(Collectors.toList());
+
+        List<String> names2 = list2.stream()
+                .map(Ingredient::getIngredientName)
+                .map(Enum::name)
+                .sorted()
+                .collect(Collectors.toList());
+
+        return names1.equals(names2);
+    }
+
+
+
 
 }
