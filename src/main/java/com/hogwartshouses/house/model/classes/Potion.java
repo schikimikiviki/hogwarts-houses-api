@@ -21,8 +21,10 @@ public class Potion {
     @JoinColumn(name = "person_id")
     private Person person;
 
-    @OneToMany(mappedBy = "potion", orphanRemoval = true)
+
+    @OneToMany(mappedBy = "potion", orphanRemoval = true, cascade = CascadeType.ALL)
     private List<Ingredient> ingredientList;
+
 
     private BrewingStatus brewingStatus;
 
@@ -31,7 +33,8 @@ public class Potion {
     @JoinColumn(name = "recipe_id")
     private Recipe recipe;
 
-
+//Todo:
+    // 3. brewingStatus does not change if > 5
 
     // getters and setters
 
@@ -71,10 +74,19 @@ public class Potion {
     public void setIngredientList(List<Ingredient> ingredientList) {
         this.ingredientList = ingredientList;
 
-        if (ingredientList.size() < 5) {
+        if (ingredientList != null && ingredientList.size() < 5) {
             this.brewingStatus = BrewingStatus.brew;
         }
+
+        // Set the potion for each ingredient in the list
+        if (ingredientList != null) {
+            for (Ingredient ingredient : ingredientList) {
+                ingredient.setPotion(this);
+            }
+        }
     }
+
+
 
     public BrewingStatus getBrewingStatus() {
         return brewingStatus;
