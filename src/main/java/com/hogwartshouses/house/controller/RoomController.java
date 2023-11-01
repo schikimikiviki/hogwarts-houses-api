@@ -56,12 +56,6 @@ public class RoomController {
     }
 
 
-    @GetMapping("/{id}/single-person")
-    Optional<Person> findSinglePerson(@PathVariable Long id) {
-        return roomService.getPerson(id);
-    }
-
-
     @PatchMapping("/{personId}/update-room/{newRoomId}")
     public ResponseEntity<?> updatePersonRoom(@PathVariable Long personId, @PathVariable Long newRoomId) {
         Optional<Person> updatedPerson = roomService.updatePersonRoom(personId, newRoomId);

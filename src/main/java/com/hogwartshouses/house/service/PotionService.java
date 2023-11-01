@@ -72,14 +72,16 @@ public class PotionService {
     public List<Potion> getPotionsByStudent(Long id) {
         //get student via id
         List<Potion> potionList = potionRepository.findByPersonId(id);
-
         return potionList;
     }
 
-    public Potion exploratoryBrewing(Long id){
-        // logic
-        return null;
-    }
+    //todo: when posting a new potion, include Person
+    // --> person should appear in the database and in GET all houses too
+
+//    public Potion exploratoryBrewing(Long id){
+//        // logic
+//        return null;
+//    }
 
 
 }

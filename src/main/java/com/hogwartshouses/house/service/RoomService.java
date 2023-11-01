@@ -93,18 +93,14 @@ public class RoomService {
         Room existingRoom = roomRepository.findById(id)
                 .orElseThrow(RoomNotFoundException::new);
 
-        // Update the existing newRoom with the data
         existingRoom.setName(newRoom.getName());
         existingRoom.setDescription(newRoom.getDescription());
         existingRoom.setAffiliation(newRoom.getAffiliation());
         existingRoom.setCapacity(newRoom.getCapacity());
 
-
-        // Update the placesLeft field based on the modified capacity and personList
         existingRoom.setPersonList(newRoom.getPersonList());
         existingRoom.updatePlacesLeft();
 
-        // Save the updated newRoom
         return roomRepository.save(existingRoom);
     }
 
@@ -122,9 +118,7 @@ public class RoomService {
     }
 
 
-    public Optional<Person> getPerson(Long id){
-        return personRepository.findById(id);
-    }
+
 
     public Optional<Person> updatePersonRoom(Long personId, Long newRoomId) {
         Optional<Person> personOptional = personRepository.findById(personId);
