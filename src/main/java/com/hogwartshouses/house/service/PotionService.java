@@ -3,24 +3,23 @@ package com.hogwartshouses.house.service;
 import com.hogwartshouses.house.model.classes.Ingredient;
 import com.hogwartshouses.house.model.classes.Person;
 import com.hogwartshouses.house.model.classes.Potion;
-import com.hogwartshouses.house.model.classes.Room;
 import com.hogwartshouses.house.model.enums.BrewingStatus;
+import com.hogwartshouses.house.repository.PersonRepository;
 import com.hogwartshouses.house.repository.PotionRepository;
-import com.hogwartshouses.house.service.exceptions.RoomCapacityFullException;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
 public class PotionService {
 
     private final PotionRepository potionRepository;
+    private final PersonRepository personRepository;
 
-    public PotionService(PotionRepository potionRepository) {
+    public PotionService(PotionRepository potionRepository, PersonRepository personRepository) {
         this.potionRepository = potionRepository;
+        this.personRepository = personRepository;
     }
 
     public List<Potion> getAllPotions() {
@@ -28,26 +27,40 @@ public class PotionService {
     }
 
     public Potion savePotion(Potion potion, List<Potion> potionList) {
-        boolean isReplica = false;
 
-        for (Potion potionItem : potionList) {
-            if (areIngredientListsIdentical(potionItem.getIngredientList(), potion.getIngredientList())) {
-                potion.setBrewingStatus(BrewingStatus.replica);
-                isReplica = true;
-                break;
+        Person person = personRepository.findById(potion.getPerson().getId()).orElse(null);
+        if (person != null) {
+            potion.setPerson(person);
+            boolean isReplica = false;
+
+            for (Potion potionItem : potionList) {
+                if (areIngredientListsIdentical(potionItem.getIngredientList(), potion.getIngredientList())) {
+                    potion.setBrewingStatus(BrewingStatus.replica);
+                    isReplica = true;
+                    break;
+                }
             }
+
+            if (!isReplica) {
+                if (potion.getIngredientList().size() < 5) {
+                    potion.setBrewingStatus(BrewingStatus.brew);
+                } else {
+                    potion.setBrewingStatus(BrewingStatus.discovery);
+                }
+            }
+
+            // Set the associated person explicitly
+            if (potion.getPerson() != null) {
+                potion.setPerson(potion.getPerson()); // You might need to ensure proper handling here
+            }
+
+            return potionRepository.save(potion);
+        } else {
+            return null;
         }
 
-        if (!isReplica) {
-            if (potion.getIngredientList().size() < 5) {
-                potion.setBrewingStatus(BrewingStatus.brew);
-            } else {
-                potion.setBrewingStatus(BrewingStatus.discovery);
-            }
-        }
-
-        return potionRepository.save(potion);
     }
+
 
     private boolean areIngredientListsIdentical(List<Ingredient> list1, List<Ingredient> list2) {
         if (list1.size() != list2.size()) {
@@ -77,6 +90,7 @@ public class PotionService {
 
     //todo: when posting a new potion, include Person
     // --> person should appear in the database and in GET all houses too
+    // why is brewing status a number ? lol
 
 //    public Potion exploratoryBrewing(Long id){
 //        // logic
