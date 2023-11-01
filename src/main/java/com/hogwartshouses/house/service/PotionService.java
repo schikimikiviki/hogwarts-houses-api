@@ -76,5 +76,10 @@ public class PotionService {
         return potionList;
     }
 
+    public Potion exploratoryBrewing(Long id){
+        // logic
+        return null;
+    }
+
 
 }

@@ -34,4 +34,8 @@ public class PotionController {
         return potionService.getPotionsByStudent(id);
     }
 
+    @PostMapping("/{id}")
+    public Potion exploratoryBrewing(@PathVariable Long id){
+        return potionService.exploratoryBrewing(id);
+    }
 }
