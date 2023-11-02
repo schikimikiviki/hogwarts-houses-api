@@ -1,0 +1,441 @@
+{
+	"info": {
+		"_postman_id": "bf24940b-b45f-47f2-b3ec-173001c52786",
+		"name": "HogwartsHouses",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26172203"
+	},
+	"item": [
+		{
+			"name": "GET all houses",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/rooms",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"rooms"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET a single room",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/rooms/1",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"rooms",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET available rooms",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/rooms/available",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"rooms",
+						"available"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET a single person",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/person/1",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"person",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET all potions",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/potions",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"potions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET schema",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/actuator/mappings",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"actuator",
+						"mappings"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET a potion by a student id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/potions/1",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"potions",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET all persons",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/person",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"person"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET all recipes",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/recipes",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"recipes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET a single recipe",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/recipes/1",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"recipes",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST a new room",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"description\": \"A magic place to be\",\r\n    \"name\": \"Main room\",\r\n    \"affiliation\": \"Ravenclaw\",\r\n    \"capacity\": 3,\r\n    \"placesLeft\": 3,\r\n    \"personList\": []\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/rooms",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"rooms"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST a new potion",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Polyjuice Potion\",\r\n    \"ingredientList\": [\r\n        {\r\n            \"ingredientName\": \"Chokeberry\"\r\n        },\r\n        {\r\n            \"ingredientName\": \"Ivy\"\r\n        },\r\n        {\r\n            \"ingredientName\": \"Blood\"\r\n        },\r\n        {\r\n            \"ingredientName\": \"Ivy\"\r\n        },\r\n        {\r\n            \"ingredientName\": \"Blood\"\r\n        },\r\n        {\r\n            \"ingredientName\": \"Ivy\"\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/potions/1",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"potions",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST a new recipe",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Recipe for love potion\",\r\n    \"person\": {\r\n        \"id\": 1,\r\n        \"name\": \"Harry Potter\",\r\n        \"role\": \"the main character\"\r\n    },\r\n    \"ingredientList\": [\r\n        {\r\n            \"ingredientName\": \"Chokeberry\"\r\n        },\r\n        {\r\n            \"ingredientName\": \"Ivy\"\r\n        },\r\n        {\r\n            \"ingredientName\": \"Blood\"\r\n        },\r\n        {\r\n            \"ingredientName\": \"Ivy\"\r\n        },\r\n        {\r\n            \"ingredientName\": \"Blood\"\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/recipes/1",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"recipes",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UPDATE room with people",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Harry Potter\",\r\n    \"role\": \"the main character\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/rooms/1/person",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"rooms",
+						"1",
+						"person"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UPDATE a room",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"description\": \"A magic place to be\",\r\n    \"name\": \"test\",\r\n    \"affiliation\": \"Ravenclaw\",\r\n    \"capacity\": 11\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/rooms/2",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"rooms",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UPDATE a person's room",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/rooms/2/3",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"rooms",
+						"2",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UPDATE a single person",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/rooms/1/update-room/2",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"rooms",
+						"1",
+						"update-room",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UPDATE a potion",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Polyjuice Potion against bad dreams\",\r\n    \"ingredientList\": [\r\n        {\r\n            \"ingredientName\": \"Nettleweed\"\r\n        },\r\n        {\r\n            \"ingredientName\": \"Ivy\"\r\n        },\r\n        {\r\n            \"ingredientName\": \"Blood\"\r\n        },\r\n        {\r\n            \"ingredientName\": \"Ivy\"\r\n        },\r\n        {\r\n            \"ingredientName\": \"Blood\"\r\n        },\r\n        {\r\n            \"ingredientName\": \"Ivy\"\r\n        }\r\n    ],\r\n    \"person\": {\r\n        \"id\": 2,\r\n        \"name\": \"Harry Potter\",\r\n        \"role\": \"the main character\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/potions/1",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"potions",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE a single room",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/rooms/1",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"rooms",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "URL",
+			"value": "http://localhost:8080",
+			"type": "string"
+		}
+	]
+}
