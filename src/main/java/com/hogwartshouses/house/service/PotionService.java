@@ -90,14 +90,9 @@ public class PotionService {
         return potionList;
     }
 
-    //todo: when posting a new potion, include Person
-    // --> person should appear in the database and in GET all houses too
+    //todo: posting recipe to person
     // why is brewing status a number ? lol
 
-//    public Potion exploratoryBrewing(Long id){
-//        // logic
-//        return null;
-//    }
 
 
 }
