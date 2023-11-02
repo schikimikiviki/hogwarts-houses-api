@@ -26,6 +26,7 @@ public class Potion {
     private List<Ingredient> ingredientList;
 
 
+    @Enumerated(EnumType.STRING)
     private BrewingStatus brewingStatus;
 
     @ManyToOne

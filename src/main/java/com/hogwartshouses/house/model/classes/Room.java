@@ -17,6 +17,7 @@ public class Room {
     private String description;
 
 
+    @Enumerated(EnumType.STRING)
     private Affiliation affiliation;
 
 
