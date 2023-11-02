@@ -30,9 +30,13 @@ public class PotionController {
     }
 
     @GetMapping("/{id}")
-    public List<Potion> getPotionsbyStudent(@PathVariable Long id){
+    public List<Potion> getPotionsByStudent(@PathVariable Long id) {
         return potionService.getPotionsByStudent(id);
     }
 
 
+    @PatchMapping("/{id}")
+    public Potion updatePotion(@PathVariable Long id, @RequestBody Potion potion) {
+        return potionService.changePotion(id, potion);
+    }
 }

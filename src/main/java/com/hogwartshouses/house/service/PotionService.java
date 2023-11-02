@@ -3,11 +3,14 @@ package com.hogwartshouses.house.service;
 import com.hogwartshouses.house.model.classes.Ingredient;
 import com.hogwartshouses.house.model.classes.Person;
 import com.hogwartshouses.house.model.classes.Potion;
+import com.hogwartshouses.house.model.classes.Room;
 import com.hogwartshouses.house.model.enums.BrewingStatus;
 import com.hogwartshouses.house.repository.PersonRepository;
 import com.hogwartshouses.house.repository.PotionRepository;
+import com.hogwartshouses.house.service.exceptions.RoomNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -89,8 +92,27 @@ public class PotionService {
         return potionList;
     }
 
-    //todo: posting recipe to person
-    // why is brewing status a number ? lol
+    public Potion changePotion(Long id, Potion newPotion) {
+        Potion existingPotion = potionRepository.findById(id)
+                .orElseThrow(RoomNotFoundException::new);
+
+        existingPotion.setName(newPotion.getName());
+        existingPotion.setPerson(newPotion.getPerson());
+
+
+        existingPotion.getIngredientList().clear();
+
+        if (newPotion.getIngredientList() != null) {
+            for (Ingredient newIngredient : newPotion.getIngredientList()) {
+                newIngredient.setPotion(existingPotion);
+                existingPotion.getIngredientList().add(newIngredient);
+            }
+        }
+
+        return potionRepository.save(existingPotion);
+    }
+
+
 
 
 
