@@ -22,7 +22,7 @@ public class Person {
     @OneToMany(mappedBy = "person", orphanRemoval = true)
     private List<Recipe> recipeList;
 
-    @OneToMany(mappedBy = "person", orphanRemoval = true)
+    @OneToMany(mappedBy = "person", orphanRemoval = true,  cascade = CascadeType.ALL)
     private List<Potion> potionList;
 
 

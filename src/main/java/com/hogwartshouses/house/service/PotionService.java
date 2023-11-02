@@ -8,6 +8,7 @@ import com.hogwartshouses.house.model.enums.BrewingStatus;
 import com.hogwartshouses.house.repository.PersonRepository;
 import com.hogwartshouses.house.repository.PotionRepository;
 import com.hogwartshouses.house.service.exceptions.RoomNotFoundException;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -92,14 +93,30 @@ public class PotionService {
         return potionList;
     }
 
+    @Transactional
     public Potion changePotion(Long id, Potion newPotion) {
         Potion existingPotion = potionRepository.findById(id)
                 .orElseThrow(RoomNotFoundException::new);
 
         existingPotion.setName(newPotion.getName());
+
+        // person update
+        Person newPerson = newPotion.getPerson();
+        Person existingPerson = existingPotion.getPerson();
+
+        if (newPerson != null && existingPerson != null && !newPerson.getId().equals(existingPerson.getId())) {
+
+            existingPerson.getPotionList().remove(existingPotion);
+            personRepository.save(existingPerson);
+
+            newPerson.getPotionList().add(existingPotion);
+            personRepository.save(newPerson);
+        }
+
         existingPotion.setPerson(newPotion.getPerson());
 
 
+        //ingredients update
         existingPotion.getIngredientList().clear();
 
         if (newPotion.getIngredientList() != null) {
