@@ -26,9 +26,10 @@ public class PotionService {
         return potionRepository.findAll();
     }
 
-    public Potion savePotion(Potion potion, List<Potion> potionList) {
+    public Potion savePotion(Potion potion, List<Potion> potionList, Long id) {
 
-        Person person = personRepository.findById(potion.getPerson().getId()).orElse(null);
+        Person person = personRepository.findById(id).orElse(null);
+
         if (person != null) {
             potion.setPerson(person);
             boolean isReplica = false;
@@ -58,6 +59,7 @@ public class PotionService {
         } else {
             return null;
         }
+
 
     }
 

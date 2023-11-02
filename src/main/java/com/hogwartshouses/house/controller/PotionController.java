@@ -22,11 +22,11 @@ public class PotionController {
         return potionService.getAllPotions();
     }
 
-    @PostMapping
-    public Potion postNewPotion(@RequestBody Potion potion) {
+    @PostMapping("/{id}")
+    public Potion postNewPotion(@RequestBody Potion potion, @PathVariable Long id) {
 
         List<Potion> potionList = potionService.getAllPotions();
-        return potionService.savePotion(potion, potionList);
+        return potionService.savePotion(potion, potionList, id);
     }
 
     @GetMapping("/{id}")
@@ -34,8 +34,5 @@ public class PotionController {
         return potionService.getPotionsByStudent(id);
     }
 
-//    @PostMapping("/{id}")
-//    public Potion exploratoryBrewing(@PathVariable Long id){
-//        return potionService.exploratoryBrewing(id);
-//    }
+
 }
