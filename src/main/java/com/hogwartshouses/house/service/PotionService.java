@@ -50,10 +50,9 @@ public class PotionService {
                 }
             }
 
-            // Set the associated person explicitly
-            if (potion.getPerson() != null) {
-                potion.setPerson(potion.getPerson()); // You might need to ensure proper handling here
-            }
+//            if (potion.getPerson() != null) {
+//                potion.setPerson(potion.getPerson());
+//            }
 
             return potionRepository.save(potion);
         } else {

@@ -18,10 +18,10 @@ public class Recipe {
     @JoinColumn(name = "person_id")
     private Person person;
 
-    @OneToMany(mappedBy = "recipe")
+    @OneToMany(mappedBy = "recipe", orphanRemoval = true, cascade = CascadeType.ALL)
     private List<Ingredient> ingredientList;
 
-    @OneToMany(mappedBy = "recipe", orphanRemoval = true)
+    @OneToMany(mappedBy = "recipe", orphanRemoval = true, cascade = CascadeType.ALL)
     private List<Potion> potionList;
 
 
@@ -60,7 +60,14 @@ public class Recipe {
 
     public void setIngredientList(List<Ingredient> ingredientList) {
         this.ingredientList = ingredientList;
+
+        if (ingredientList != null) {
+            for (Ingredient ingredient : ingredientList) {
+                ingredient.setRecipe(this);
+            }
+        }
     }
+
 
     public List<Potion> getPotionList() {
         return potionList;

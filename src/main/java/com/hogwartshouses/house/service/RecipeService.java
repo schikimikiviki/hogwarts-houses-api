@@ -36,11 +36,6 @@ public class RecipeService {
 
         if (person != null) {
             recipe.setPerson(person);
-
-            if (recipe.getPerson() != null) {
-                recipe.setPerson(recipe.getPerson());
-            }
-
             return recipeRepository.save(recipe);
         } else {
             return null;
